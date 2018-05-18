@@ -20,19 +20,19 @@ if __name__ == '__main__':
         for f in [f for f in os.listdir(os.path.join(folder, 'data/rgb')) if f.endswith('.png')]:
             src_path = os.path.join(folder, 'data/rgb')
             src_path = os.path.join(src_path, f)
-            dst_path = os.path.join('data/rgb/', f)
+            dst_path = 'data/rgb/'
             shutil.move(src_path, dst_path)
 
         for f in [f for f in os.listdir(os.path.join(folder, 'data/depth')) if f.endswith('.png')]:
             src_path = os.path.join(folder, 'data/depth')
             src_path = os.path.join(src_path, f)
-            dst_path = os.path.join('data/depth/', f)
+            dst_path = 'data/depth/'
             shutil.move(src_path, dst_path)
 
         for f in [f for f in os.listdir(os.path.join(folder, 'data/semantic_pretty')) if f.endswith('.png')]:
             src_path = os.path.join(folder, 'data/semantic_pretty')
             src_path = os.path.join(src_path, f)
-            dst_path = os.path.join('data/semantic/', f)
+            dst_path = 'data/semantic/'
             shutil.move(src_path, dst_path)
 
         shutil.rmtree(folder)
