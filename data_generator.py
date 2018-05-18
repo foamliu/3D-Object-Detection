@@ -92,11 +92,11 @@ def valid_gen():
 
 
 def shuffle_data():
-    num_samples = 39222
-    num_train_samples = 31378
-    num_valid_samples = 7844
-    train_folder = '../../data/cvpr-2018-autonomous-driving/train_color'
+    train_folder = 'data/rgb'
     names = [f for f in os.listdir(train_folder) if f.endswith('.jpg')]
+    num_samples = len(names)
+    num_train_samples = int(num_samples * 0.8)
+    num_valid_samples = num_samples - num_train_samples
     valid_names = random.sample(names, num_valid_samples)
     train_names = [n for n in names if n not in valid_names]
     shuffle(valid_names)
