@@ -15,9 +15,9 @@ if __name__ == '__main__':
         with tarfile.open(filename) as tar:
             tar.extractall()
 
-        shutil.move('area_{}/data/rgb'.format(area_no), 'data/')
-        shutil.move('area_{}/data/depth'.format(area_no), 'data/')
-        shutil.move('area_{}/data/semantic_pretty'.format(area_no), 'data/')
+        shutil.move('area_{}/data/rgb/*'.format(area_no), 'data/rgb/')
+        shutil.move('area_{}/data/depth/*'.format(area_no), 'data/depth/')
+        shutil.move('area_{}/data/semantic_pretty/*'.format(area_no), 'data/semantic/')
 
         shutil.rmtree('area_{}/'.format(area_no))
 
@@ -25,5 +25,5 @@ if __name__ == '__main__':
     print('{} images'.format(len(image_names)))
     depth_names = [f for f in os.listdir('data/depth') if f.endswith('.png')]
     print('{} depths'.format(len(depth_names)))
-    semantic_names = [f for f in os.listdir('data/semantic_pretty') if f.endswith('.png')]
+    semantic_names = [f for f in os.listdir('data/semantic') if f.endswith('.png')]
     print('{} semantics'.format(len(semantic_names)))
