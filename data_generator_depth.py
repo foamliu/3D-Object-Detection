@@ -95,7 +95,7 @@ def shuffle_data():
     num_train_samples = int(num_samples * 0.8)
     print('num_train_samples: ' + str(num_train_samples))
     num_valid_samples = num_samples - num_train_samples
-    print('num_train_samples: ' + str(num_train_samples))
+    print('num_valid_samples: ' + str(num_valid_samples))
     valid_names = random.sample(names, num_valid_samples)
     train_names = [n for n in names if n not in valid_names]
     shuffle(valid_names)
