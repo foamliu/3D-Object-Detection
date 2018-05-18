@@ -1,7 +1,7 @@
 import numpy as np
 import unittest
 import cv2 as cv
-from data_generator import train_gen
+from data_generator_depth import train_gen
 
 
 class TestStringMethods(unittest.TestCase):

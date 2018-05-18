@@ -4,49 +4,41 @@ from random import shuffle
 
 import cv2 as cv
 import numpy as np
-from PIL import Image
 
 from config import batch_size
 from config import img_cols
 from config import img_rows
 
-train_color = 'data/rgb'
-train_label = 'data/depth'
+train_folder = 'data/rgb'
+depth_folder = 'data/depth'
+semantic_folder = 'data/semantic'
 
 
-def get_label(name):
-    label_name = name.split('.')[0] + '_instanceIds.png'
-    filename = os.path.join(train_label, label_name)
-    label = np.asarray(Image.open(filename)) // 1000
-    for class_name in ['person', 'car', 'bus', 'truck', 'motorbicycle', 'bicycle', 'tricycle']:
-        label[label == inv_dict[class_name]] = gray_scales[class_name]
-    label[(label != 255) & (label != 224) & (label != 192) & (label != 160) & (label != 128) & (label != 96) & (label != 64)] = 0
+def get_depth(name):
+    filename = os.path.join(depth_folder, name)
+    label = cv.imread(filename, 0)
     return label
 
 
-# Randomly crop 320x320 (image, label) pairs centered on pixels in the known regions.
-def random_choice(label):
-    y_indices, x_indices = np.where(label != 0)
-    num_knowns = len(y_indices)
-    x, y = 0, 0
-    if num_knowns > 0:
-        ix = random.choice(range(num_knowns))
-        center_x = x_indices[ix]
-        center_y = y_indices[ix]
-        x = max(0, center_x - 160)
-        y = max(0, center_y - 160)
+def random_choice(image_size, crop_size):
+    height, width = image_size
+    crop_height, crop_width = crop_size
+    x = random.randint(0, width - crop_width)
+    y = random.randint(0, height - crop_height)
     return x, y
 
 
-def safe_crop(mat, x, y):
+def safe_crop(mat, x, y, crop_size):
+    crop_height, crop_width = crop_size
     if len(mat.shape) == 2:
-        ret = np.zeros((320, 320), np.float32)
+        ret = np.zeros((crop_height, crop_width), np.float32)
     else:
-        ret = np.zeros((320, 320, 3), np.float32)
-    crop = mat[y:y + 320, x:x + 320]
+        ret = np.zeros((crop_height, crop_width, 3), np.float32)
+    crop = mat[y:y + crop_height, x:x + crop_width]
     h, w = crop.shape[:2]
     ret[0:h, 0:w] = crop
-
+    if crop_size != (320, 320):
+        ret = cv.resize(ret, dsize=(img_rows, img_cols), interpolation=cv.INTER_CUBIC)
     return ret
 
 
@@ -61,20 +53,24 @@ def data_gen(usage):
 
         for i_batch in range(batch_size):
             name = names[i]
-            filename = os.path.join(train_color, name)
+            filename = os.path.join(train_folder, name)
             image = cv.imread(filename)
-            label = get_label(name)
+            image_size = image.shape[:2]
+            depth = get_depth(name)
 
-            x, y = random_choice(label)
-            image = safe_crop(image, x, y)
-            label = safe_crop(label, x, y)
+            different_sizes = [(320, 320), (480, 480), (640, 640)]
+            crop_size = random.choice(different_sizes)
+
+            x, y = random_choice(image_size, crop_size)
+            image = safe_crop(image, x, y, crop_size)
+            depth = safe_crop(depth, x, y, crop_size)
 
             if np.random.random_sample() > 0.5:
                 image = np.fliplr(image)
-                label = np.fliplr(label)
+                depth = np.fliplr(depth)
 
             batch_x[i_batch, :, :, 0:3] = image / 255.
-            batch_y[i_batch, :, :, 0] = label / 255.
+            batch_y[i_batch, :, :, 0] = depth / 255.
 
             i += 1
             if i >= len(names):
