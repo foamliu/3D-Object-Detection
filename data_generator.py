@@ -10,14 +10,8 @@ from config import batch_size
 from config import img_cols
 from config import img_rows
 
-train_color = '../../data/cvpr-2018-autonomous-driving/train_color'
-train_label = '../../data/cvpr-2018-autonomous-driving/train_label'
-
-class_dict = {0: 'others', 33: 'car', 34: 'motorbicycle', 35: 'bicycle', 36: 'person', 38: 'truck', 39: 'bus',
-              40: 'tricycle'}
-inv_dict = {v: k for k, v in class_dict.items()}
-gray_scales = {'other': 0, 'person': 255, 'car': 224, 'bus': 192, 'truck': 160,
-                   'motorbicycle': 128, 'bicycle': 96, 'tricycle': 64}
+train_color = 'data/rgb'
+train_label = 'data/depth'
 
 
 def get_label(name):

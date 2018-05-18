@@ -15,11 +15,11 @@ if __name__ == '__main__':
         with tarfile.open(filename) as tar:
             tar.extractall()
 
-        shutil.move('data/area_{}/data/rgb'.format(area_no), 'data/')
-        shutil.move('data/area_{}/data/depth'.format(area_no), 'data/')
-        shutil.move('data/area_{}/data/semantic_pretty'.format(area_no), 'data/')
+        shutil.move('area_{}/data/rgb'.format(area_no), 'data/')
+        shutil.move('area_{}/data/depth'.format(area_no), 'data/')
+        shutil.move('area_{}/data/semantic_pretty'.format(area_no), 'data/')
 
-        shutil.rmtree('data/area_{}/'.format(area_no))
+        shutil.rmtree('area_{}/'.format(area_no))
 
     image_names = [f for f in os.listdir('data/rgb') if f.endswith('.png')]
     print('{} images'.format(len(image_names)))
