@@ -15,6 +15,9 @@ semantic_folder = 'data/semantic'
 
 
 def get_semantic(name):
+    tokens = name.split('_')
+    tokens[-1] = 'semantic_pretty.png'
+    name = '_'.join(tokens)
     filename = os.path.join(semantic_folder, name)
     label = cv.imread(filename)
     return label

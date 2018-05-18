@@ -15,6 +15,9 @@ semantic_folder = 'data/semantic'
 
 
 def get_depth(name):
+    tokens = name.split('_')
+    tokens[-1] = 'depth.png'
+    name = '_'.join(tokens)
     filename = os.path.join(depth_folder, name)
     label = cv.imread(filename, 0)
     return label
