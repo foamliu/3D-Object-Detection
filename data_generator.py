@@ -66,7 +66,6 @@ def data_gen(usage):
         batch_y = np.empty((batch_size, img_rows, img_cols, 1), dtype=np.float32)
 
         for i_batch in range(batch_size):
-            print(i_batch)
             name = names[i]
             filename = os.path.join(train_color, name)
             image = cv.imread(filename)

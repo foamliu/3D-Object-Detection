@@ -1,9 +1,5 @@
-import argparse
-
 import keras
-import tensorflow as tf
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
-from keras.utils import multi_gpu_model
 
 import migrate
 from config import patience, batch_size, epochs, num_train_samples, num_valid_samples
@@ -26,25 +22,19 @@ if __name__ == '__main__':
 
     model.compile(optimizer='nadam', loss=custom_loss)
 
-    print(new_model.summary())
-
-    # Summarize then go!
-    num_cpu = get_available_cpus()
-    workers = int(round(num_cpu / 2))
-    print('num_gpu={}\nnum_cpu={}\nworkers={}\ntrained_models_path={}.'.format(num_gpu, num_cpu, workers,
-                                                                               checkpoint_models_path))
+    print(model.summary())
 
     # Final callbacks
     callbacks = [tensor_board, model_checkpoint, early_stop, reduce_lr]
 
     # Start Fine-tuning
-    new_model.fit_generator(train_gen(),
-                            steps_per_epoch=num_train_samples // batch_size,
-                            validation_data=valid_gen(),
-                            validation_steps=num_valid_samples // batch_size,
-                            epochs=epochs,
-                            verbose=1,
-                            callbacks=callbacks,
-                            use_multiprocessing=True,
-                            workers=workers
-                            )
+    model.fit_generator(train_gen(),
+                        steps_per_epoch=num_train_samples // batch_size,
+                        validation_data=valid_gen(),
+                        validation_steps=num_valid_samples // batch_size,
+                        epochs=epochs,
+                        verbose=1,
+                        callbacks=callbacks,
+                        use_multiprocessing=True,
+                        workers=4
+                        )

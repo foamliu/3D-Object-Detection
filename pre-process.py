@@ -2,17 +2,28 @@
 
 import os
 import shutil
-import zipfile
+import tarfile
 
 if __name__ == '__main__':
-    # if not os.path.exists('Combined_Dataset'):
+    area_nos = [1, 2, 3, 4, 6]
 
-    zip_files = ['train_color.zip', 'train_label.zip', 'train_video_list.zip', 'test.zip', 'test_video_list_and_name_mapping.zip', 'sample_submission.csv.zip']
-
-    for zip_file in zip_files:
-        filename = os.path.join('../../data', zip_file)
+    for area_no in area_nos:
+        tar_file = 'area_{}_no_xyz.tar'.format(area_no)
+        filename = os.path.join('data', tar_file)
         print('Extracting {}...'.format(filename))
 
-        with zipfile.ZipFile(filename, 'r') as zip_ref:
-            zip_ref.extractall('.')
-            zip_ref.close()
+        with tarfile.open(filename) as tar:
+            tar.extractall()
+
+        shutil.move('data/area_{}/data/rgb'.format(area_no), 'data/')
+        shutil.move('data/area_{}/data/depth'.format(area_no), 'data/')
+        shutil.move('data/area_{}/data/semantic_pretty'.format(area_no), 'data/')
+
+        shutil.rmtree('data/area_{}/'.format(area_no))
+
+    image_names = [f for f in os.listdir('data/rgb') if f.endswith('.png')]
+    print('{} images'.format(len(image_names)))
+    depth_names = [f for f in os.listdir('data/depth') if f.endswith('.png')]
+    print('{} depths'.format(len(depth_names)))
+    semantic_names = [f for f in os.listdir('data/semantic_pretty') if f.endswith('.png')]
+    print('{} semantics'.format(len(semantic_names)))
