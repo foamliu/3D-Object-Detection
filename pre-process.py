@@ -15,11 +15,27 @@ if __name__ == '__main__':
         with tarfile.open(filename) as tar:
             tar.extractall()
 
-        shutil.move('area_{}/data/rgb/*'.format(area_no), 'data/rgb/')
-        shutil.move('area_{}/data/depth/*'.format(area_no), 'data/depth/')
-        shutil.move('area_{}/data/semantic_pretty/*'.format(area_no), 'data/semantic/')
+        folder = 'area_{}'.format(area_no)
 
-        shutil.rmtree('area_{}/'.format(area_no))
+        for f in [f for f in os.listdir(os.path.join(folder, 'data/rgb')) if f.endswith('.png')]:
+            src_path = os.path.join(folder, 'data/rgb')
+            src_path = os.path.join(src_path, f)
+            dst_path = os.path.join('data/rgb/', f)
+            shutil.move(src_path, dst_path)
+
+        for f in [f for f in os.listdir(os.path.join(folder, 'data/depth')) if f.endswith('.png')]:
+            src_path = os.path.join(folder, 'data/depth')
+            src_path = os.path.join(src_path, f)
+            dst_path = os.path.join('data/depth/', f)
+            shutil.move(src_path, dst_path)
+
+        for f in [f for f in os.listdir(os.path.join(folder, 'data/semantic_pretty')) if f.endswith('.png')]:
+            src_path = os.path.join(folder, 'data/semantic_pretty')
+            src_path = os.path.join(src_path, f)
+            dst_path = os.path.join('data/semantic/', f)
+            shutil.move(src_path, dst_path)
+
+        shutil.rmtree(folder)
 
     image_names = [f for f in os.listdir('data/rgb') if f.endswith('.png')]
     print('{} images'.format(len(image_names)))
