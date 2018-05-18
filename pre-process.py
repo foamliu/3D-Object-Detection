@@ -16,19 +16,24 @@ if __name__ == '__main__':
             tar.extractall()
 
         folder = 'area_{}'.format(area_no)
-
+        if not os.path.exists('data/rgb'):
+            os.makedirs('data/rgb')
         for f in [f for f in os.listdir(os.path.join(folder, 'data/rgb')) if f.endswith('.png')]:
             src_path = os.path.join(folder, 'data/rgb')
             src_path = os.path.join(src_path, f)
             dst_path = 'data/rgb/'
             shutil.move(src_path, dst_path)
 
+        if not os.path.exists('data/depth'):
+            os.makedirs('data/depth')
         for f in [f for f in os.listdir(os.path.join(folder, 'data/depth')) if f.endswith('.png')]:
             src_path = os.path.join(folder, 'data/depth')
             src_path = os.path.join(src_path, f)
             dst_path = 'data/depth/'
             shutil.move(src_path, dst_path)
 
+        if not os.path.exists('data/semantic'):
+            os.makedirs('data/semantic')
         for f in [f for f in os.listdir(os.path.join(folder, 'data/semantic_pretty')) if f.endswith('.png')]:
             src_path = os.path.join(folder, 'data/semantic_pretty')
             src_path = os.path.join(src_path, f)
