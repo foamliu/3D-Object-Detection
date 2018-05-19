@@ -61,6 +61,9 @@ if __name__ == '__main__':
         out = out * 255.0
         out = out.astype(np.uint8)
 
+        if not os.path.exists('images'):
+            os.makedirs('images')
+
         cv.imwrite('images/{}_depth_image.png'.format(i), image)
         cv.imwrite('images/{}_depth_out.png'.format(i), out)
         cv.imwrite('images/{}_depth_label.png'.format(i), label)
