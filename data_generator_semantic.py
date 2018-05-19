@@ -97,21 +97,21 @@ def split_data():
     num_samples = len(names)  # 52903
     print('num_samples: ' + str(num_samples))
 
+    num_train_samples = int(num_samples * 0.8)
+    print('num_train_samples: ' + str(num_train_samples))
+    num_valid_samples = num_samples - num_train_samples
+    print('num_valid_samples: ' + str(num_valid_samples))
+    valid_names = random.sample(names, num_valid_samples)
+    train_names = [n for n in names if n not in valid_names]
+    shuffle(valid_names)
+    shuffle(train_names)
 
-num_train_samples = int(num_samples * 0.8)
-print('num_train_samples: ' + str(num_train_samples))
-num_valid_samples = num_samples - num_train_samples
-print('num_valid_samples: ' + str(num_valid_samples))
-valid_names = random.sample(names, num_valid_samples)
-train_names = [n for n in names if n not in valid_names]
-shuffle(valid_names)
-shuffle(train_names)
+    with open('valid_names.txt', 'w') as file:
+        file.write('\n'.join(valid_names))
 
-with open('valid_names.txt', 'w') as file:
-    file.write('\n'.join(valid_names))
+    with open('train_names.txt', 'w') as file:
+        file.write('\n'.join(train_names))
 
-with open('train_names.txt', 'w') as file:
-    file.write('\n'.join(train_names))
 
 if __name__ == '__main__':
     split_data()
