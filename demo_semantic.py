@@ -42,30 +42,30 @@ if __name__ == '__main__':
         filename = os.path.join(rgb_test_path, image_name)
         image = cv.imread(filename)
         label = get_semantic(image_name)
-    image_size = image.shape[:2]
-    different_sizes = [(320, 320), (480, 480), (640, 640)]
-    crop_size = random.choice(different_sizes)
+        image_size = image.shape[:2]
+        different_sizes = [(320, 320), (480, 480), (640, 640)]
+        crop_size = random.choice(different_sizes)
 
-    x, y = random_choice(image_size, crop_size)
-    image = safe_crop(image, x, y, crop_size)
-    label = safe_crop(label, x, y, crop_size)
-    print('Start processing image: {}'.format(filename))
+        x, y = random_choice(image_size, crop_size)
+        image = safe_crop(image, x, y, crop_size)
+        label = safe_crop(label, x, y, crop_size)
+        print('Start processing image: {}'.format(filename))
 
-    x_test = np.empty((1, img_rows, img_cols, 3), dtype=np.float32)
-    x_test[0, :, :, 0:3] = image / 255.
+        x_test = np.empty((1, img_rows, img_cols, 3), dtype=np.float32)
+        x_test[0, :, :, 0:3] = image / 255.
 
-    out = model.predict(x_test)
-    # print(out.shape)
+        out = model.predict(x_test)
+        # print(out.shape)
+    
+        out = np.reshape(out, (img_rows, img_cols, 3))
+        out = out * 255.0
+        out = out.astype(np.uint8)
 
-    out = np.reshape(out, (img_rows, img_cols, 3))
-    out = out * 255.0
-    out = out.astype(np.uint8)
+        if not os.path.exists('images'):
+            os.makedirs('images')
 
-    if not os.path.exists('images'):
-        os.makedirs('images')
-
-    cv.imwrite('images/{}_semantic_image.png'.format(i), image)
-    cv.imwrite('images/{}_semantic_out.png'.format(i), out)
-    cv.imwrite('images/{}_semantic_label.png'.format(i), label)
+        cv.imwrite('images/{}_semantic_image.png'.format(i), image)
+        cv.imwrite('images/{}_semantic_out.png'.format(i), out)
+        cv.imwrite('images/{}_semantic_label.png'.format(i), label)
 
     K.clear_session()
