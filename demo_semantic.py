@@ -1,55 +1,71 @@
 # import the necessary packages
-import cv2 as cv
-import numpy as np
-import keras.backend as K
 import os
 import random
-from semantic_model import build_encoder_decoder
+
+import cv2 as cv
+import keras.backend as K
+import numpy as np
+
 from data_generator_semantic import random_choice, safe_crop
+from semantic_model import build_encoder_decoder
+
+
+def get_semantic(name):
+    label_test_path = 'data/semantic_test/'
+    tokens = name.split('_')
+    tokens[-1] = 'semantic_pretty.png'
+    name = '_'.join(tokens)
+    filename = os.path.join(label_test_path, name)
+    label = cv.imread(filename, 0)
+    return label
 
 
 if __name__ == '__main__':
     img_rows, img_cols = 320, 320
     channel = 3
 
-    model_weights_path = 'models/model.107-0.0197.hdf5'
+    model_weights_path = 'models/semantic_model.11-0.1096.hdf5'
     model = build_encoder_decoder()
     model.load_weights(model_weights_path)
 
     print(model.summary())
 
-    test_path = 'data/test/'
-    test_images = [f for f in os.listdir(test_path) if
+    rgb_test_path = 'data/rgb_test/'
+    label_test_path = 'data/semantic_test/'
+    test_images = [f for f in os.listdir(rgb_test_path) if
                    os.path.isfile(os.path.join(test_path, f)) and f.endswith('.png')]
 
     samples = random.sample(test_images, 10)
 
     for i in range(len(samples)):
         image_name = samples[i]
-        filename = os.path.join(test_path, image_name)
+        filename = os.path.join(rgb_test_path, image_name)
         image = cv.imread(filename)
-        image_size = image.shape[:2]
-        different_sizes = [(320, 320), (480, 480), (640, 640)]
-        crop_size = random.choice(different_sizes)
+        label = get_semantic(image_name)
+    image_size = image.shape[:2]
+    different_sizes = [(320, 320), (480, 480), (640, 640)]
+    crop_size = random.choice(different_sizes)
 
-        x, y = random_choice(image_size, crop_size)
-        image = safe_crop(image, x, y, crop_size)
-        print('Start processing image: {}'.format(filename))
+    x, y = random_choice(image_size, crop_size)
+    image = safe_crop(image, x, y, crop_size)
+    label = safe_crop(label, x, y, crop_size)
+print('Start processing image: {}'.format(filename))
 
-        x_test = np.empty((1, img_rows, img_cols, 3), dtype=np.float32)
-        x_test[0, :, :, 0:3] = image / 255.
+x_test = np.empty((1, img_rows, img_cols, 3), dtype=np.float32)
+x_test[0, :, :, 0:3] = image / 255.
 
-        out = model.predict(x_test)
-        # print(out.shape)
+out = model.predict(x_test)
+# print(out.shape)
 
-        out = np.reshape(out, (img_rows, img_cols, 3))
-        out = out * 255.0
-        out = out.astype(np.uint8)
+out = np.reshape(out, (img_rows, img_cols, 3))
+out = out * 255.0
+out = out.astype(np.uint8)
 
-        if not os.path.exists('images'):
-            os.makedirs('images')
+if not os.path.exists('images'):
+    os.makedirs('images')
 
-        cv.imwrite('images/{}_semantic_image.png'.format(i), image)
-        cv.imwrite('images/{}_semantic_out.png'.format(i), out)
+cv.imwrite('images/{}_semantic_image.png'.format(i), image)
+cv.imwrite('images/{}_semantic_out.png'.format(i), out)
+cv.imwrite('images/{}_semantic_label.png'.format(i), label)
 
-    K.clear_session()
+K.clear_session()

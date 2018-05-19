@@ -5,7 +5,6 @@ from random import shuffle
 import cv2 as cv
 import numpy as np
 
-from config import batch_size
 from config import img_cols
 from config import img_rows
 
@@ -45,7 +44,7 @@ def safe_crop(mat, x, y, crop_size):
     return ret
 
 
-def data_gen(usage):
+def data_gen(usage, batch_size):
     filename = '{}_names.txt'.format(usage)
     with open(filename, 'r') as f:
         names = f.read().splitlines()
@@ -84,31 +83,35 @@ def data_gen(usage):
         yield batch_x, batch_y
 
 
-def train_gen():
-    return data_gen('train')
+def train_gen(batch_size):
+    return data_gen('train', batch_size)
 
 
-def valid_gen():
-    return data_gen('valid')
+def valid_gen(batch_size):
+    return data_gen('valid', batch_size)
 
 
 def split_data():
     train_folder = 'data/rgb'
-    names = [f for f in os.listdir(train_folder) if f.endswith('.jpg')]
+    names = [f for f in os.listdir(train_folder) if f.endswith('.png')]
     num_samples = len(names)  # 52903
-    num_train_samples = int(num_samples * 0.8)
-    num_valid_samples = num_samples - num_train_samples
-    valid_names = random.sample(names, num_valid_samples)
-    train_names = [n for n in names if n not in valid_names]
-    shuffle(valid_names)
-    shuffle(train_names)
+    print('num_samples: ' + str(num_samples))
 
-    with open('valid_names.txt', 'w') as file:
-        file.write('\n'.join(valid_names))
 
-    with open('train_names.txt', 'w') as file:
-        file.write('\n'.join(train_names))
+num_train_samples = int(num_samples * 0.8)
+print('num_train_samples: ' + str(num_train_samples))
+num_valid_samples = num_samples - num_train_samples
+print('num_valid_samples: ' + str(num_valid_samples))
+valid_names = random.sample(names, num_valid_samples)
+train_names = [n for n in names if n not in valid_names]
+shuffle(valid_names)
+shuffle(train_names)
 
+with open('valid_names.txt', 'w') as file:
+    file.write('\n'.join(valid_names))
+
+with open('train_names.txt', 'w') as file:
+    file.write('\n'.join(train_names))
 
 if __name__ == '__main__':
     split_data()
