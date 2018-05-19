@@ -33,7 +33,7 @@ $ python pre-process.py
 
 ### Train
 ```bash
-$ python train.py
+$ python train_depth.py
 ```
 
 If you want to visualize during training, run in your terminal:
@@ -44,5 +44,18 @@ $ tensorboard --logdir path_to_current_dir/logs
 ### Demo
 
 ```bash
-$ python demo.py
+$ python demo_depth.py
 ```
+
+Input | GT | Output |
+|---|---|---|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_depth_label.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_depth_label.png)|
