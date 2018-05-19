@@ -33,7 +33,7 @@ if __name__ == '__main__':
     rgb_test_path = 'data/rgb_test/'
     label_test_path = 'data/semantic_test/'
     test_images = [f for f in os.listdir(rgb_test_path) if
-                   os.path.isfile(os.path.join(test_path, f)) and f.endswith('.png')]
+                   os.path.isfile(os.path.join(rgb_test_path, f)) and f.endswith('.png')]
 
     samples = random.sample(test_images, 10)
 
@@ -49,23 +49,23 @@ if __name__ == '__main__':
     x, y = random_choice(image_size, crop_size)
     image = safe_crop(image, x, y, crop_size)
     label = safe_crop(label, x, y, crop_size)
-print('Start processing image: {}'.format(filename))
+    print('Start processing image: {}'.format(filename))
 
-x_test = np.empty((1, img_rows, img_cols, 3), dtype=np.float32)
-x_test[0, :, :, 0:3] = image / 255.
+    x_test = np.empty((1, img_rows, img_cols, 3), dtype=np.float32)
+    x_test[0, :, :, 0:3] = image / 255.
 
-out = model.predict(x_test)
-# print(out.shape)
+    out = model.predict(x_test)
+    # print(out.shape)
 
-out = np.reshape(out, (img_rows, img_cols, 3))
-out = out * 255.0
-out = out.astype(np.uint8)
+    out = np.reshape(out, (img_rows, img_cols, 3))
+    out = out * 255.0
+    out = out.astype(np.uint8)
 
-if not os.path.exists('images'):
-    os.makedirs('images')
+    if not os.path.exists('images'):
+        os.makedirs('images')
 
-cv.imwrite('images/{}_semantic_image.png'.format(i), image)
-cv.imwrite('images/{}_semantic_out.png'.format(i), out)
-cv.imwrite('images/{}_semantic_label.png'.format(i), label)
+    cv.imwrite('images/{}_semantic_image.png'.format(i), image)
+    cv.imwrite('images/{}_semantic_out.png'.format(i), out)
+    cv.imwrite('images/{}_semantic_label.png'.format(i), label)
 
-K.clear_session()
+    K.clear_session()
