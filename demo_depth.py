@@ -29,9 +29,9 @@ if __name__ == '__main__':
         image_name = samples[i]
         filename = os.path.join(rgb_test_path, image_name)
         label_path = os.path.join(label_test_path, image_name)
-        bgr_img = cv.imread(filename)
+        image = cv.imread(filename)
         label = cv.imread(label_path)
-        image_size = bgr_img.shape[:2]
+        image_size = image.shape[:2]
         different_sizes = [(320, 320), (480, 480), (640, 640)]
         crop_size = random.choice(different_sizes)
 
@@ -50,7 +50,7 @@ if __name__ == '__main__':
         out = out * 255.0
         out = out.astype(np.uint8)
 
-        cv.imwrite('images/{}_depth_image.png'.format(i), bgr_img)
+        cv.imwrite('images/{}_depth_image.png'.format(i), image)
         cv.imwrite('images/{}_depth_out.png'.format(i), out)
         cv.imwrite('images/{}_depth_label.png'.format(i), label)
 
