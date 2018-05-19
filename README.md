@@ -13,7 +13,13 @@ This repository is to take SUNRGB-D 3D Object Detection Challenge with SegNet.
 Follow the [instruction](http://rgbd.cs.princeton.edu/challenge.html) to download dataset.
 
 ```bash
-$ kaggle competitions download -c cvpr-2018-autonomous-driving -p /mnt/data
+$ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_1_no_xyz.tar
+$ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_2_no_xyz.tar
+$ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_3_no_xyz.tar
+$ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_4_no_xyz.tar
+$ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_5a_no_xyz.tar
+$ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_5b_no_xyz.tar
+$ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_6_no_xyz.tar
 ```
 
 ## Architecture
