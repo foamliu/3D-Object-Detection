@@ -39,7 +39,7 @@ $ python pre-process.py
 
 ### Train
 ```bash
-$ python train_depth.py
+$ python train_semantic.py
 ```
 
 If you want to visualize during training, run in your terminal:
@@ -50,8 +50,24 @@ $ tensorboard --logdir path_to_current_dir/logs
 ### Demo
 
 ```bash
-$ python demo_depth.py
+$ python demo_semantic.py
 ```
+
+#### Semantic
+
+Input | GT | Output |
+|---|---|---|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_semantic_out.png)|
+|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_semantic_out.png)|
+
 
 #### Depth
 
@@ -69,17 +85,3 @@ Input | GT | Output |
 |![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_depth_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_depth_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_depth_out.png)|
 
 
-#### Semantic
-
-Input | GT | Output |
-|---|---|---|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/0_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/1_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/2_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/3_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/4_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/5_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/6_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/7_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/8_semantic_out.png)|
-|![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_semantic_image.png)  | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_semantic_label.png) | ![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/9_semantic_out.png)|
