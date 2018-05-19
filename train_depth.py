@@ -1,3 +1,5 @@
+import argparse
+
 import keras
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
@@ -8,6 +10,12 @@ from depth_model import build_encoder_decoder
 from utils import depth_loss
 
 if __name__ == '__main__':
+    # Parse arguments
+    ap = argparse.ArgumentParser()
+    ap.add_argument("-p", "--pretrained", help="path to save pretrained model files")
+    args = vars(ap.parse_args())
+    pretrained_path = args["pretrained"]
+
     checkpoint_models_path = 'models/'
 
     # Callbacks
@@ -17,8 +25,12 @@ if __name__ == '__main__':
     early_stop = EarlyStopping('val_loss', patience=patience)
     reduce_lr = ReduceLROnPlateau('val_loss', factor=0.1, patience=int(patience / 4), verbose=1)
 
-    model = build_encoder_decoder()
-    migrate.migrate_model(model)
+    if pretrained_path is not None:
+        model = build_encoder_decoder()
+        model.load_weights(pretrained_path)
+    else:
+        model = build_encoder_decoder()
+        migrate.migrate_model(model)
 
     model.compile(optimizer='nadam', loss=depth_loss)
 
