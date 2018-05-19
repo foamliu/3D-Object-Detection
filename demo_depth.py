@@ -18,22 +18,26 @@ if __name__ == '__main__':
 
     print(model.summary())
 
-    test_path = 'data/test/'
-    test_images = [f for f in os.listdir(test_path) if
-                   os.path.isfile(os.path.join(test_path, f)) and f.endswith('.png')]
+    rgb_test_path = 'data/rgb_test/'
+    label_test_path = 'data/depth_test/'
+    test_images = [f for f in os.listdir(rgb_test_path) if
+                   os.path.isfile(os.path.join(rgb_test_path, f)) and f.endswith('.png')]
 
     samples = random.sample(test_images, 10)
 
     for i in range(len(samples)):
         image_name = samples[i]
-        filename = os.path.join(test_path, image_name)
+        filename = os.path.join(rgb_test_path, image_name)
+        label_path = os.path.join(label_test_path, image_name)
         bgr_img = cv.imread(filename)
+        label = cv.imread(label_path)
         image_size = bgr_img.shape[:2]
         different_sizes = [(320, 320), (480, 480), (640, 640)]
         crop_size = random.choice(different_sizes)
 
         x, y = random_choice(image_size, crop_size)
         image = safe_crop(image, x, y, crop_size)
+        label = safe_crop(label, x, y, crop_size)
         print('Start processing image: {}'.format(filename))
 
         x_test = np.empty((1, img_rows, img_cols, 3), dtype=np.float32)
@@ -48,5 +52,6 @@ if __name__ == '__main__':
 
         cv.imwrite('images/{}_depth_image.png'.format(i), bgr_img)
         cv.imwrite('images/{}_depth_out.png'.format(i), out)
+        cv.imwrite('images/{}_depth_label.png'.format(i), label)
 
     K.clear_session()
