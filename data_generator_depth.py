@@ -92,7 +92,7 @@ def valid_gen():
     return data_gen('valid')
 
 
-def shuffle_data():
+def split_data():
     train_folder = 'data/rgb'
     names = [f for f in os.listdir(train_folder) if f.endswith('.png')]
     num_samples = len(names)
@@ -114,4 +114,4 @@ def shuffle_data():
 
 
 if __name__ == '__main__':
-    shuffle_data()
+    split_data()
