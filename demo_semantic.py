@@ -16,7 +16,7 @@ def get_semantic(name):
     tokens[-1] = 'semantic_pretty.png'
     name = '_'.join(tokens)
     filename = os.path.join(label_test_path, name)
-    label = cv.imread(filename, 0)
+    label = cv.imread(filename)
     return label
 
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 
         out = model.predict(x_test)
         # print(out.shape)
-    
+
         out = np.reshape(out, (img_rows, img_cols, 3))
         out = out * 255.0
         out = out.astype(np.uint8)
