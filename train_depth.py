@@ -4,7 +4,7 @@ import keras
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
 import migrate
-from config import patience, batch_size, epochs, num_train_samples, num_valid_samples
+from config import patience, epochs, num_train_samples, num_valid_samples
 from data_generator_depth import train_gen, valid_gen
 from depth_model import build_encoder_decoder
 from utils import depth_loss
@@ -39,10 +39,12 @@ if __name__ == '__main__':
     # Final callbacks
     callbacks = [tensor_board, model_checkpoint, early_stop, reduce_lr]
 
+    batch_size = 14
+
     # Start Fine-tuning
-    model.fit_generator(train_gen(),
+    model.fit_generator(train_gen(batch_size),
                         steps_per_epoch=num_train_samples // batch_size,
-                        validation_data=valid_gen(),
+                        validation_data=valid_gen(batch_size),
                         validation_steps=num_valid_samples // batch_size,
                         epochs=epochs,
                         verbose=1,

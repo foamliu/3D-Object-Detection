@@ -5,7 +5,6 @@ from random import shuffle
 import cv2 as cv
 import numpy as np
 
-from config import batch_size
 from config import img_cols
 from config import img_rows
 
@@ -45,7 +44,7 @@ def safe_crop(mat, x, y, crop_size):
     return ret
 
 
-def data_gen(usage):
+def data_gen(usage, batch_size):
     filename = '{}_names.txt'.format(usage)
     with open(filename, 'r') as f:
         names = f.read().splitlines()
@@ -84,12 +83,12 @@ def data_gen(usage):
         yield batch_x, batch_y
 
 
-def train_gen():
-    return data_gen('train')
+def train_gen(batch_size):
+    return data_gen('train', batch_size)
 
 
-def valid_gen():
-    return data_gen('valid')
+def valid_gen(batch_size):
+    return data_gen('valid', batch_size)
 
 
 def split_data():
