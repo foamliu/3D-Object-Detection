@@ -1,11 +1,23 @@
 # import the necessary packages
-import cv2 as cv
-import numpy as np
-import keras.backend as K
 import os
 import random
-from depth_model import build_encoder_decoder
+
+import cv2 as cv
+import keras.backend as K
+import numpy as np
+
 from data_generator_depth import random_choice, safe_crop
+from depth_model import build_encoder_decoder
+
+
+def get_depth(name):
+    label_test_path = 'data/depth_test/'
+    tokens = name.split('_')
+    tokens[-1] = 'depth.png'
+    name = '_'.join(tokens)
+    filename = os.path.join(label_test_path, name)
+    label = cv.imread(filename, 0)
+    return label
 
 
 if __name__ == '__main__':
@@ -28,9 +40,8 @@ if __name__ == '__main__':
     for i in range(len(samples)):
         image_name = samples[i]
         filename = os.path.join(rgb_test_path, image_name)
-        label_path = os.path.join(label_test_path, image_name)
         image = cv.imread(filename)
-        label = cv.imread(label_path)
+        label = get_depth(image_name)
         image_size = image.shape[:2]
         different_sizes = [(320, 320), (480, 480), (640, 640)]
         crop_size = random.choice(different_sizes)
