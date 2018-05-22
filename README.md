@@ -24,7 +24,7 @@ $ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_6_no_xyz.tar
 
 ## Architecture
 
-![image](https://github.com/foamliu/SegNet/raw/master/images/segnet.jpg)
+![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/segnet.png)
 
 
 ## ImageNet Pretrained Models
@@ -39,7 +39,7 @@ $ python pre-process.py
 
 ### Train
 ```bash
-$ python train_semantic.py
+$ python train.py
 ```
 
 If you want to visualize during training, run in your terminal:
@@ -50,7 +50,7 @@ $ tensorboard --logdir path_to_current_dir/logs
 ### Demo
 
 ```bash
-$ python demo_semantic.py
+$ python demo.py
 ```
 
 #### Semantic
