@@ -28,7 +28,7 @@ def get_y(semantic):
     temp = np.zeros(shape=(320, 320, num_classes), dtype=np.int32)
     semantic = np.array(semantic).astype(np.int32)
     for i in range(num_classes):
-        temp[i] = np.sum(np.abs(semantic - colors[i]), axis=2)
+        temp[:, :, i] = np.sum(np.abs(semantic - colors[i]), axis=2)
     y = np.argmin(temp, axis=2)
     return y
 
