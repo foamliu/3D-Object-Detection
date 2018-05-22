@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     # Callbacks
     tensor_board = keras.callbacks.TensorBoard(log_dir='./logs', histogram_freq=0, write_graph=True, write_images=True)
-    model_names = checkpoint_models_path + 'semantic_model.{epoch:02d}-{val_loss:.4f}.hdf5'
+    model_names = checkpoint_models_path + 'model.{epoch:02d}-{val_loss:.4f}.hdf5'
     model_checkpoint = ModelCheckpoint(model_names, monitor='val_loss', verbose=1, save_best_only=True)
     early_stop = EarlyStopping('val_loss', patience=patience)
     reduce_lr = ReduceLROnPlateau('val_loss', factor=0.1, patience=int(patience / 4), verbose=1)
@@ -32,7 +32,7 @@ if __name__ == '__main__':
         migrate.migrate_model(model)
 
     decoder_target = tf.placeholder(dtype='int32', shape=(None, None, None))
-    model.compile(optimizer='nadam', loss=sparse_cross_entropy, target_tensors=[decoder_target])
+    model.compile(optimizer='nadam', loss=sparse_cross_entropy, target_tensors=[decoder_target], metrics=['accuracy'])
 
     print(model.summary())
 
