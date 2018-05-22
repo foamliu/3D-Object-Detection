@@ -6,7 +6,8 @@ import cv2 as cv
 import keras.backend as K
 import numpy as np
 
-from data_generator import random_choice, safe_crop
+from config import num_classes
+from data_generator import random_choice, safe_crop, to_bgr
 from model import build_encoder_decoder
 
 
@@ -55,11 +56,9 @@ if __name__ == '__main__':
         x_test[0, :, :, 0:3] = image / 255.
 
         out = model.predict(x_test)
-        # print(out.shape)
-
-        out = np.reshape(out, (img_rows, img_cols, 3))
-        out = out * 255.0
-        out = out.astype(np.uint8)
+        out = np.reshape(out, (img_rows, img_cols, num_classes))
+        out = np.argmax(out, axis=2)
+        out = to_bgr(out)
 
         if not os.path.exists('images'):
             os.makedirs('images')

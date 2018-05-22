@@ -40,6 +40,7 @@ def to_bgr(y_pred):
             color_id = y_pred[r, c]
             # print("color_id: " + str(color_id))
             ret[r, c, :] = colors[color_id]
+    ret = ret.astype(np.uint8)
     return ret
 
 
