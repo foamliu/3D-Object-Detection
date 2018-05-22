@@ -7,6 +7,8 @@ import numpy as np
 
 from config import img_cols
 from config import img_rows
+from config import colors
+from config import num_classes
 
 train_folder = 'data/rgb'
 depth_folder = 'data/depth'
@@ -18,8 +20,27 @@ def get_semantic(name):
     tokens[-1] = 'semantic_pretty.png'
     name = '_'.join(tokens)
     filename = os.path.join(semantic_folder, name)
-    label = cv.imread(filename)
-    return label
+    semantic = cv.imread(filename)
+    return semantic
+
+
+def get_y(semantic):
+    temp = np.zeros(shape=(320, 320, num_classes), dtype=np.int32)
+    semantic = np.array(semantic).astype(np.int32)
+    for i in range(num_classes):
+        temp[i] = np.sum(np.abs(semantic - colors[i]), axis=2)
+    y = np.argmin(temp, axis=2)
+    return y
+
+
+def to_bgr(y_pred):
+    ret = np.zeros((img_rows, img_cols, 3), np.float32)
+    for r in range(320):
+        for c in range(320):
+            color_id = y_pred[r, c]
+            # print("color_id: " + str(color_id))
+            ret[r, c, :] = colors[color_id]
+    return ret
 
 
 def random_choice(image_size, crop_size):
@@ -52,7 +73,7 @@ def data_gen(usage, batch_size):
     np.random.shuffle(names)
     while True:
         batch_x = np.empty((batch_size, img_rows, img_cols, 3), dtype=np.float32)
-        batch_y = np.empty((batch_size, img_rows, img_cols, 3), dtype=np.float32)
+        batch_y = np.empty((batch_size, img_rows, img_cols), dtype=np.int32)
 
         for i_batch in range(batch_size):
             name = names[i]
@@ -72,8 +93,11 @@ def data_gen(usage, batch_size):
                 image = np.fliplr(image)
                 semantic = np.fliplr(semantic)
 
-            batch_x[i_batch, :, :, 0:3] = image / 255.
-            batch_y[i_batch, :, :, 0:3] = semantic / 255.
+            x = image / 255.
+            y = get_y(semantic)
+
+            batch_x[i_batch, :, :, 0:3] = x
+            batch_y[i_batch, :, :] = y
 
             i += 1
             if i >= len(names):

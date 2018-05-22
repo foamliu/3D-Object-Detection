@@ -6,8 +6,8 @@ import cv2 as cv
 import keras.backend as K
 import numpy as np
 
-from data_generator_semantic import random_choice, safe_crop
-from semantic_model import build_encoder_decoder
+from data_generator import random_choice, safe_crop
+from model import build_encoder_decoder
 
 
 def get_semantic(name):

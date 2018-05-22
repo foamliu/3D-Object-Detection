@@ -7,6 +7,7 @@ from custom_layers.unpooling_layer import Unpooling
 
 
 def build_encoder_decoder():
+    num_labels = 14
     kernel = 3
 
     # Encoder
@@ -107,7 +108,7 @@ def build_encoder_decoder():
                bias_initializer='zeros')(x)
     x = BatchNormalization()(x)
 
-    x = Conv2D(3, (1, 1), activation='sigmoid', padding='valid', name='pred', kernel_initializer='he_normal',
+    x = Conv2D(num_labels, (1, 1), activation='softmax', padding='valid', name='pred', kernel_initializer='he_normal',
                bias_initializer='zeros')(x)
 
     model = Model(inputs=input_tensor, outputs=x)

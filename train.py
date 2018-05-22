@@ -4,10 +4,10 @@ import keras
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
 import migrate
-from config import patience, epochs, num_train_samples, num_valid_samples
-from data_generator_semantic import train_gen, valid_gen
-from semantic_model import build_encoder_decoder
-from utils import semantic_loss
+from config import patience, epochs, num_train_samples, num_valid_samples, batch_size
+from data_generator import train_gen, valid_gen
+from model import build_encoder_decoder
+from utils import sparse_cross_entropy
 
 if __name__ == '__main__':
     # Parse arguments
@@ -31,14 +31,13 @@ if __name__ == '__main__':
         model = build_encoder_decoder()
         migrate.migrate_model(model)
 
-    model.compile(optimizer='nadam', loss=semantic_loss)
+    decoder_target = tf.placeholder(dtype='int32', shape=(None, None, None))
+    model.compile(optimizer='nadam', loss=sparse_cross_entropy, target_tensors=[decoder_target])
 
     print(model.summary())
 
     # Final callbacks
     callbacks = [tensor_board, model_checkpoint, early_stop, reduce_lr]
-
-    batch_size = 14
 
     # Start Fine-tuning
     model.fit_generator(train_gen(batch_size),
