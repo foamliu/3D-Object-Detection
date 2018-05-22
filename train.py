@@ -1,6 +1,7 @@
 import argparse
 
 import keras
+import tensorflow as tf
 from keras.callbacks import ModelCheckpoint, EarlyStopping, ReduceLROnPlateau
 
 import migrate
