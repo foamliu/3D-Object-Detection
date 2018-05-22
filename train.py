@@ -33,7 +33,7 @@ if __name__ == '__main__':
         migrate.migrate_model(model)
 
     decoder_target = tf.placeholder(dtype='int32', shape=(None, None, None))
-    model.compile(optimizer='nadam', loss=sparse_cross_entropy, target_tensors=[decoder_target], metrics=['accuracy'])
+    model.compile(optimizer='nadam', loss=sparse_cross_entropy, target_tensors=[decoder_target])
 
     print(model.summary())
 
