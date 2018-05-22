@@ -63,8 +63,8 @@ if __name__ == '__main__':
         if not os.path.exists('images'):
             os.makedirs('images')
 
-        cv.imwrite('images/{}_semantic_image.png'.format(i), image)
-        cv.imwrite('images/{}_semantic_out.png'.format(i), out)
-        cv.imwrite('images/{}_semantic_label.png'.format(i), label)
+        cv.imwrite('images/{}_image.png'.format(i), image)
+        cv.imwrite('images/{}_out.png'.format(i), out)
+        cv.imwrite('images/{}_label.png'.format(i), label)
 
     K.clear_session()
