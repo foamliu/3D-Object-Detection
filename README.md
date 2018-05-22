@@ -1,6 +1,6 @@
 # 3D Object Detection
 
-This repository is to take SUNRGB-D 3D Object Detection Challenge with SegNet.
+This repository is to do Indoor Semantic Segmentation with SegNet.
 
 ## Dependencies
 - [NumPy](http://docs.scipy.org/doc/numpy-1.10.1/user/install.html)
@@ -10,7 +10,9 @@ This repository is to take SUNRGB-D 3D Object Detection Challenge with SegNet.
 
 ## Dataset
 
-Follow the [instruction](http://rgbd.cs.princeton.edu/challenge.html) to download dataset.
+![image](https://github.com/foamliu/3D-Object-Detection/raw/master/images/dataset.png)
+
+Follow the [instruction](http://buildingparser.stanford.edu/dataset.html#overview) to download 2D-3D-S dataset.
 
 ```bash
 $ wget https://storage.googleapis.com/3dsemantics/noXYZ/area_1_no_xyz.tar
@@ -52,8 +54,6 @@ $ tensorboard --logdir path_to_current_dir/logs
 ```bash
 $ python demo.py
 ```
-
-#### Semantic
 
 Input | GT | Output |
 |---|---|---|
