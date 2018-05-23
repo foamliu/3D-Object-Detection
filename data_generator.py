@@ -74,9 +74,9 @@ class DataGenSequence(Sequence):
 
         filename = '{}_names.txt'.format(usage)
         with open(filename, 'r') as f:
-            names = f.read().splitlines()
+            self.names = f.read().splitlines()
 
-        np.random.shuffle(names)
+        np.random.shuffle(self.names)
 
     def __len__(self):
         return int(np.ceil(len(self.names) / float(batch_size)))
