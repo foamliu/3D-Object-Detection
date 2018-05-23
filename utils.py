@@ -1,12 +1,5 @@
-import keras.backend as K
+import cv2 as cv
 import tensorflow as tf
-
-
-# simple alpha prediction loss
-def depth_loss(y_true, y_pred):
-    epsilon = 1e-6
-    epsilon_sqr = K.constant(epsilon ** 2)
-    return K.mean(K.sqrt(K.square(y_pred - y_true) + epsilon_sqr))
 
 
 def sparse_cross_entropy(y_true, y_pred):
@@ -34,3 +27,9 @@ def sparse_cross_entropy(y_true, y_pred):
     loss_mean = tf.reduce_mean(loss)
 
     return loss_mean
+
+
+def draw_str(dst, target, s):
+    x, y = target
+    cv.putText(dst, s, (x + 1, y + 1), cv.FONT_HERSHEY_PLAIN, 1.0, (0, 0, 0), thickness=2, lineType=cv.LINE_AA)
+    cv.putText(dst, s, (x, y), cv.FONT_HERSHEY_PLAIN, 1.0, (255, 255, 255), lineType=cv.LINE_AA)
