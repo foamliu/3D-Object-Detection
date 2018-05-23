@@ -4,7 +4,9 @@ from random import shuffle
 
 import cv2 as cv
 import numpy as np
+from keras.utils import Sequence
 
+from config import batch_size
 from config import colors
 from config import img_cols
 from config import img_rows
@@ -66,18 +68,28 @@ def safe_crop(mat, x, y, crop_size):
     return ret
 
 
-def data_gen(usage, batch_size):
-    filename = '{}_names.txt'.format(usage)
-    with open(filename, 'r') as f:
-        names = f.read().splitlines()
-    i = 0
-    np.random.shuffle(names)
-    while True:
-        batch_x = np.empty((batch_size, img_rows, img_cols, 3), dtype=np.float32)
-        batch_y = np.empty((batch_size, img_rows, img_cols), dtype=np.int32)
+class DataGenSequence(Sequence):
+    def __init__(self, usage):
+        self.usage = usage
 
-        for i_batch in range(batch_size):
-            name = names[i]
+        filename = '{}_names.txt'.format(usage)
+        with open(filename, 'r') as f:
+            names = f.read().splitlines()
+
+        np.random.shuffle(names)
+
+    def __len__(self):
+        return int(np.ceil(len(self.names) / float(batch_size)))
+
+    def __getitem__(self, idx):
+        i = idx * batch_size
+
+        length = min(batch_size, (len(self.names) - i))
+        batch_x = np.empty((length, img_rows, img_cols, 3), dtype=np.float32)
+        batch_y = np.empty((length, img_rows, img_cols), dtype=np.int32)
+
+        for i_batch in range(length):
+            name = self.names[i]
             filename = os.path.join(train_folder, name)
             image = cv.imread(filename)
             image_size = image.shape[:2]
@@ -102,19 +114,19 @@ def data_gen(usage, batch_size):
             batch_y[i_batch, :, :] = y
 
             i += 1
-            if i >= len(names):
-                i = 0
-                np.random.shuffle(names)
 
-        yield batch_x, batch_y
+        return batch_x, batch_y
 
-
-def train_gen(batch_size):
-    return data_gen('train', batch_size)
+    def on_epoch_end(self):
+        np.random.shuffle(self.names)
 
 
-def valid_gen(batch_size):
-    return data_gen('valid', batch_size)
+def train_gen():
+    return DataGenSequence('train')
+
+
+def valid_gen():
+    return DataGenSequence('valid')
 
 
 def split_data():
