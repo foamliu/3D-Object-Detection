@@ -5,9 +5,9 @@ from random import shuffle
 import cv2 as cv
 import numpy as np
 
+from config import colors
 from config import img_cols
 from config import img_rows
-from config import colors
 from config import num_classes
 
 train_folder = 'data/rgb'
@@ -83,7 +83,8 @@ def data_gen(usage, batch_size):
             image_size = image.shape[:2]
             semantic = get_semantic(name)
 
-            different_sizes = [(320, 320), (480, 480), (640, 640)]
+            different_sizes = [(320, 320), (480, 480), (480, 480), (480, 480), (640, 640), (640, 640), (640, 640),
+                               (960, 960), (960, 960), (960, 960)]
             crop_size = random.choice(different_sizes)
 
             x, y = random_choice(image_size, crop_size)
